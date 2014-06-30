@@ -13,6 +13,7 @@ description = {
 }
 dependencies = {
   'lua = 5.1',
+  'seawolf',
 }
 build = {
   type = 'builtin',

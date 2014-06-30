@@ -1,4 +1,4 @@
-package = 'ophal_cli'
+package = 'ophal-cli'
 version = '0.1-0'
 source = {
   url = 'git://github.com/ophal/cli.git',

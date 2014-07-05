@@ -1,3 +1,3 @@
 #!/usr/bin/env lua
 local cli = require 'ophal_cli'
-cli.bootstrap()
+cli.bootstrap(arg)

@@ -29,6 +29,21 @@ local m; m = {
 
     print(output)
   end,
+
+  commands = {
+    ['uuid-generate'] = {
+      description = 'Generate a new UUID (depends on luuid Lua module).',
+      alias = 'uuid',
+      exec = function()
+        local uuid = require 'uuid'
+        if uuid ~= nil then
+          return uuid.new()
+        else
+          return 'Error: Can not generate a new uuid. Please make sure to have the uuid Lua module installed in your system and try again.'
+        end
+      end
+    },
+  },
 }
 
 return m

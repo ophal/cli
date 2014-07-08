@@ -49,6 +49,42 @@ local m; m = {
         end
       end
     },
+
+    ['sha256-hash'] = {
+      description = 'Generate a new UUID (depends on luuid Lua module).',
+      alias = 'sha256',
+      exec = function(arg)
+        local crypto = require 'crypto'
+
+        if crypto == nil then
+          return 'Error: Can not generate a new sha256 hash. Please make sure to have the crypto Lua module installed in your system and try again.'
+        end
+
+        if arg[1] == nil then
+          return 'Error: Can not generate a new sha256 hash for empty string. Usage: sha256-hash [yoursecret]'
+        end
+
+        return (require 'crypto'.digest.new 'sha256'):update(arg[1]):final()
+      end
+    },
+
+    ['md5-hash'] = {
+      description = 'Generate a new UUID (depends on luuid Lua module).',
+      alias = 'md5',
+      exec = function(arg)
+        local crypto = require 'crypto'
+
+        if crypto == nil then
+          return 'Error: Can not generate a new md5 hash. Please make sure to have the crypto Lua module installed in your system and try again.'
+        end
+
+        if arg[1] == nil then
+          return 'Error: Can not generate a new md5 hash for empty string. Usage: md5-hash [yoursecret]'
+        end
+
+        return (require 'crypto'.digest.new 'md5'):update(arg[1]):final()
+      end
+    },
   },
 }
 

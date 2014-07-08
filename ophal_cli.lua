@@ -1,3 +1,8 @@
+local seawolf = {
+  contrib = require 'seawolf.contrib',
+}
+local table_shift = seawolf.contrib.table_shift
+
 local m; m = {
 
   aliases = {},
@@ -11,7 +16,7 @@ local m; m = {
   end,
 
   bootstrap = function(arg)
-    local cmd, output
+    local cmd, output, arguments
     local commands, aliases = m.commands, m.aliases
 
     -- TODO: detect and bootstrap Ophal.
@@ -21,10 +26,11 @@ local m; m = {
     -- Execute command
     cmd = commands[arg[1]]
     alias = aliases[arg[1]]
+    arguments = table_shift(arg)
     if type(cmd) == 'table' then
-      output = cmd.exec()
+      output = cmd.exec(arguments)
     elseif type(alias) == 'table' then
-      output = alias.exec()
+      output = alias.exec(arguments)
     end
 
     print(output)

@@ -2,6 +2,7 @@ local seawolf = {
   contrib = require 'seawolf.contrib',
 }
 local table_shift = seawolf.contrib.table_shift
+local tconcat = table.concat
 
 local m; m = {
 
@@ -31,12 +32,33 @@ local m; m = {
       output = cmd.exec(arguments)
     elseif type(alias) == 'table' then
       output = alias.exec(arguments)
+    else
+      output = commands.help.exec()
     end
 
     print(output)
   end,
 
   commands = {
+    help = {
+      description = 'Display help information about ophal-cli',
+      exec = function(arg)
+        local output = {
+          "usage: ophal <command> [<args>]\n",
+          "Commands:",
+        }
+        for k, v in pairs(m.commands) do
+          output[#output + 1] = ('  %s    %s'):format(k, v.description)
+          if v.alias then
+            output[#output + 1] = ('  %s'):format(v.alias)
+          end
+          output[#output + 1] = ''
+        end
+
+        return tconcat(output, "\n")
+      end
+    },
+
     ['uuid-generate'] = {
       description = 'Generate a new UUID (depends on luuid Lua module).',
       alias = 'uuid',

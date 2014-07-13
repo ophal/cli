@@ -1,5 +1,6 @@
 local seawolf = {
   contrib = require 'seawolf.contrib',
+  other = require 'seawolf.other',
 }
 local table_shift = seawolf.contrib.table_shift
 local tconcat = table.concat
@@ -73,12 +74,12 @@ local m; m = {
     },
 
     ['sha256-hash'] = {
-      description = 'Generate a new UUID (depends on luuid Lua module).',
+      description = 'Generate a sha256 hash (depends on lsha2 Lua module).',
       alias = 'sha256',
       exec = function(arg)
-        local crypto = require 'crypto'
+        local sha2 = require 'lsha2'
 
-        if crypto == nil then
+        if sha2 == nil then
           return 'Error: Can not generate a new sha256 hash. Please make sure to have the crypto Lua module installed in your system and try again.'
         end
 
@@ -86,17 +87,17 @@ local m; m = {
           return 'Error: Can not generate a new sha256 hash for empty string. Usage: sha256-hash [yoursecret]'
         end
 
-        return (require 'crypto'.digest.new 'sha256'):update(arg[1]):final()
+        return seawolf.other.hash('sha256', arg[1])
       end
     },
 
     ['md5-hash'] = {
-      description = 'Generate a new UUID (depends on luuid Lua module).',
+      description = 'Generate an md5 hash (depends on md5 Lua module).',
       alias = 'md5',
       exec = function(arg)
-        local crypto = require 'crypto'
+        local md5 = require 'md5'
 
-        if crypto == nil then
+        if md5 == nil then
           return 'Error: Can not generate a new md5 hash. Please make sure to have the crypto Lua module installed in your system and try again.'
         end
 
@@ -104,7 +105,7 @@ local m; m = {
           return 'Error: Can not generate a new md5 hash for empty string. Usage: md5-hash [yoursecret]'
         end
 
-        return (require 'crypto'.digest.new 'md5'):update(arg[1]):final()
+        return seawolf.other.hash('md5', arg[1])
       end
     },
   },

@@ -73,6 +73,24 @@ local m; m = {
       end
     },
 
+    ['sha1-hash'] = {
+      description = 'Generate a sha1 hash (depends on sha1 Lua module).',
+      alias = 'sha1',
+      exec = function(arg)
+        local sha1 = require 'sha1'
+
+        if sha1 == nil then
+          return 'Error: Can not generate a new sha1 hash. Please make sure to have the sha1 module installed in your system and try again.'
+        end
+
+        if arg[1] == nil then
+          return 'Error: Can not generate a new sha1 hash for empty string. Usage: sha1-hash [yoursecret]'
+        end
+
+        return seawolf.other.hash('sha1', arg[1])
+      end
+    },
+
     ['sha256-hash'] = {
       description = 'Generate a sha256 hash (depends on lsha2 Lua module).',
       alias = 'sha256',
